@@ -91,7 +91,8 @@ class WeatherSummary:
         if data is None:
             raise ValueError(f"Failed to read data file for {year}/{month_str} in {self.weather_data.city}")
 
-        data = [row for row in data if len(row) > 6 and row[2].isdigit() and row[3].isdigit() and row[6].isdigit()]
+        data = [row for row in data if len(row) > 6 and row[2].isdigit() \
+                and row[3].isdigit() and row[6].isdigit()]
 
         if not data:
             raise ValueError("No valid data found for the specified month and year")
