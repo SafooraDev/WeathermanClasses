@@ -53,7 +53,8 @@ class WeatherSummary:
 
     def yearly_summary(self, year):
         all_files = self.weather_data.get_files()
-        data_list = [self.weather_data.read_weather_data(file) for file in all_files if f"{self.weather_data.city}_{year}" in file]
+        data_list = [self.weather_data.read_weather_data(file) for file in all_files 
+                     if f"{self.weather_data.city}_{year}" in file]
         data_list = [data for data in data_list if data is not None]
         if not data_list:
             raise ValueError("No data files found for the specified year and city")
@@ -77,7 +78,8 @@ class WeatherSummary:
 
     def monthly_summary(self, year, month):
         month_str = month_map[month]
-        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, f"{self.weather_data.city}_{year}_{month_str}.txt")
+        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
+                                 f"{self.weather_data.city}_{year}_{month_str}.txt")
 
         if not os.path.exists(file_path):
             print(f"File does not exist: {file_path}")
@@ -108,7 +110,8 @@ class WeatherCharts:
 
     def draw_horizontal_bar_charts(self, year, month):
         month_str = month_map[month]
-        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, f"{self.weather_data.city}_{year}_{month_str}.txt")
+        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
+                                 f"{self.weather_data.city}_{year}_{month_str}.txt")
         
         if not os.path.exists(file_path):
             print(f"File does not exist: {file_path}")
@@ -128,7 +131,8 @@ class WeatherCharts:
 
     def draw_combined_bar_chart(self, year, month):
         month_str = month_map[month]
-        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, f"{self.weather_data.city}_{year}_{month_str}.txt")
+        file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
+                                 f"{self.weather_data.city}_{year}_{month_str}.txt")
         
         if not os.path.exists(file_path):
             raise ValueError(f"No data file found for {year}/{month_str} in {self.weather_data.city}")
@@ -142,7 +146,8 @@ class WeatherCharts:
                 date = row[0]
                 high_temp = int(float(row[2]))
                 low_temp = int(float(row[3]))
-                print(f"\033[1;30;40m {date} \033[1;34;40m {'+' * low_temp}  \033[1;31;40m {'+' * high_temp} \033[1;30;40m {low_temp}C - {high_temp}C \033[1;30;40m")
+                print(f"\033[1;30;40m {date} \033[1;34;40m {'+' * low_temp}  \033[1;31;40m {'+' * high_temp} 
+                      \033[1;30;40m {low_temp}C - {high_temp}C \033[1;30;40m")
 
 def main():
     parser = argparse.ArgumentParser(description='Weather Analysis Tool')
