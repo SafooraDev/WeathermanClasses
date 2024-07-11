@@ -3,7 +3,7 @@ import argparse
 import csv
 
 # Mapping of month numbers to their corresponding names
-month_map = {
+Month_Map = {
     1: 'Jan',
     2: 'Feb',
     3: 'Mar',
@@ -27,7 +27,7 @@ class WeatherData:
         try:
             if not os.path.exists(file_path):
                 print(f"File does not exist: {file_path}")
-                return None
+                return
             data = []
             with open(file_path, 'r') as file:
                 reader = csv.reader(file)
@@ -37,14 +37,15 @@ class WeatherData:
             return data
         except Exception as e:
             print(f"Error reading {file_path}: {e}")
-            return None
+            return
 
     def get_files(self):
         full_path = os.path.join(self.data_folder, self.city)
         if not os.path.exists(full_path):
             return []
         
-        files = [os.path.join(full_path, f) for f in os.listdir(full_path) if f.endswith('.txt')]
+        files = [os.path.join(full_path, f) for f in os.listdir(full_path) \
+            if f.endswith('.txt')]
         return files
 
 class WeatherSummary:
@@ -61,7 +62,8 @@ class WeatherSummary:
     
         data = [item for sublist in data_list for item in sublist]
 
-        data = [row for row in data if len(row) > 5 and row[2] and row[3] and row[5] and row[2] != 'Mean TemperatureC']
+        data = [row for row in data if len(row) > 5 and row[2] \
+            and row[3] and row[5] and row[2] != 'Mean TemperatureC']
 
         if not data:
             raise ValueError("No valid data found for the specified year and city")
@@ -77,7 +79,7 @@ class WeatherSummary:
         }
 
     def monthly_summary(self, year, month):
-        month_str = month_map[month]
+        month_str = Month_Map[month]
         file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
                                  f"{self.weather_data.city}_{year}_{month_str}.txt")
 
@@ -109,7 +111,7 @@ class WeatherCharts:
         self.weather_data = weather_data
 
     def draw_horizontal_bar_charts(self, year, month):
-        month_str = month_map[month]
+        month_str = Month_Map[month]
         file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
                                  f"{self.weather_data.city}_{year}_{month_str}.txt")
         
@@ -130,7 +132,7 @@ class WeatherCharts:
                 print(f"\033[1;30;40m {date} \033[1;34;40m {'+' * low_temp} \033[1;30;40m {low_temp}C")
 
     def draw_combined_bar_chart(self, year, month):
-        month_str = month_map[month]
+        month_str = Month_Map[month]
         file_path = os.path.join(self.weather_data.data_folder, self.weather_data.city, 
                                  f"{self.weather_data.city}_{year}_{month_str}.txt")
         
